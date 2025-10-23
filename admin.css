@@ -1,0 +1,133 @@
+/* =======================
+   Global Styles
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: url('images/contact.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =======================
+   Overlay
+======================= */
+.overlay {
+  background-color: rgba(255, 240, 245, 0.85);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* =======================
+   Header
+======================= */
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: #d46f8c;
+}
+
+/* =======================
+   Notification
+======================= */
+#notification {
+  background: #fff0f5;
+  border: 1px solid #d46f8c;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #5e3b4d;
+  display: none;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* =======================
+   Orders List
+======================= */
+#orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Individual Order Box */
+.order {
+  background: #fff0f5;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.order p {
+  margin-bottom: 0.5rem;
+  color: #5e3b4d;
+}
+
+.order img {
+  max-width: 120px;
+  display: block;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+}
+
+/* Status Select & Remove Button */
+.status-select {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #d46f8c;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  color: #d46f8c;
+  transition: all 0.3s ease;
+}
+
+.status-select:hover {
+  background-color: #d46f8c;
+  color: #fff;
+}
+
+.remove-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #ff6b6b;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: #d9534f;
+}
+
+/* =======================
+   Responsive
+======================= */
+@media (max-width: 600px) {
+  #orders-list {
+    flex-direction: column;
+  }
+  .order {
+    padding: 1rem;
+  }
+}

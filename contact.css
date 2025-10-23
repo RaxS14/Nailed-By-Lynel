@@ -1,0 +1,180 @@
+/* =======================
+   Global Styles
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: url('images/contact.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =======================
+   Overlay
+======================= */
+.overlay {
+  background-color: rgba(255, 240, 245, 0.85);
+  min-height: 100vh;
+  padding: 0 2rem;
+}
+
+/* =======================
+   Header / Navbar
+======================= */
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: #d46f8c;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav a {
+  display: inline-block;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #d46f8c;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav a.active {
+  background-color: #d46f8c;
+  color: #fff;
+}
+
+header nav a:hover {
+  background-color: #b5476c;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  header nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+}
+
+/* =======================
+   Contact Section
+======================= */
+.contact {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.contact h2 {
+  font-size: 2.5rem;
+  color: #c94f8b;
+  margin-bottom: 1rem;
+}
+
+.contact p {
+  font-size: 1.2rem;
+  color: #5e3b4d;
+  margin-bottom: 2rem;
+}
+
+/* Contact Info Boxes */
+.contact-info {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.contact-info div {
+  background: #fff0f5;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 280px;
+}
+
+.contact-info h3 {
+  color: #d46f8c;
+  margin-bottom: 1rem;
+}
+
+.contact-info a {
+  color: #d46f8c;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* Map Styling */
+.map {
+  margin-top: 2rem;
+}
+
+.map iframe {
+  border-radius: 15px;
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: #5e3b4d;
+  font-size: 0.9rem;
+}
+
+/* =======================
+   Supplier Section
+======================= */
+.supplier {
+  background: #fff0f5;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.supplier h3 {
+  color: #d46f8c;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.supplier p {
+  font-size: 1.1rem;
+  color: #5e3b4d;
+}
+
+.supplier a {
+  color: #d46f8c;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.supplier a:hover {
+  color: #b5476c;
+  text-decoration: underline;
+}

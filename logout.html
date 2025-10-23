@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logged Out - Nailed by Lynel</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="index.css">
+  <style>
+    .logout-message {
+      text-align: center;
+      margin: 3rem 1rem;
+      padding: 2rem;
+      background: rgba(255, 228, 240, 0.95);
+      border-radius: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      animation: fadeIn 0.8s ease;
+    }
+
+    .logout-message h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: #d46f8c;
+      margin-bottom: 1rem;
+    }
+
+    .logout-message p {
+      font-size: 1.1rem;
+      color: #5e3b4d;
+      margin-bottom: 1.5rem;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <!-- Header / Navbar -->
+    <header>
+      <h1>Nailed by Lynel</h1>
+      <nav>
+        <a href="index.html" class="nav-button">Home</a>
+        <a href="booknow.html" class="nav-button">Book Now</a>
+        <a href="services.html" class="nav-button">Services</a>
+        <a href="technician.html">Technicians</a>
+        <a href="contact.html" class="nav-button">Contact</a>
+        <a href="reviews.html" class="nav-button">Reviews</a>
+      </nav>
+    </header>
+
+    <!-- Logout Message -->
+    <section class="logout-message">
+      <h2>You've Logged Out</h2>
+      <p>You have successfully logged out. Redirecting to the login page...</p>
+    </section>
+  </div>
+
+  <script>
+    // Redirect to login.html after 2 seconds
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 2000);
+  </script>
+</body>
+</html>

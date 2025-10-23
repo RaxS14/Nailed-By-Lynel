@@ -1,0 +1,68 @@
+/* =======================
+   Technicians Container
+======================= */
+.technicians-container {
+  display: flex;
+  justify-content: center;   /* centers the cards horizontally */
+  align-items: flex-start;   /* aligns cards to top */
+  flex-wrap: wrap;           /* wraps cards on smaller screens */
+  gap: 2rem;                 /* space between cards */
+  margin-top: 2rem;
+}
+
+/* =======================
+   Individual Technician Card
+======================= */
+.technician-card {
+  background-color: #fff0f5;
+  border-radius: 20px;
+  width: 220px;              /* card width */
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.technician-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* =======================
+   Card Image
+======================= */
+.technician-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;       /* circular image */
+  display: block;
+  margin: 0 auto 1rem;      /* center image and add bottom margin */
+}
+
+/* =======================
+   Card Text
+======================= */
+.technician-card h3 {
+  font-size: 1.2rem;
+  color: #d46f8c;
+  margin-bottom: 0.3rem;
+}
+
+.technician-card .label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #c94f8b;
+  margin-bottom: 0.5rem;
+}
+
+/* =======================
+   Responsive Layout
+======================= */
+@media (max-width: 768px) {
+  .technicians-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}

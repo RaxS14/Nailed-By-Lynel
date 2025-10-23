@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Bookings Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="overlay">
+  <header>
+    <h1>All Bookings</h1>
+  </header>
+
+  <div id="notification"></div>
+
+  <div id="orders-list">
+    <p>No bookings yet.</p>
+  </div>
+</div>
+
+<script>
+const ordersList = document.getElementById('orders-list');
+const notificationDiv = document.getElementById('notification');
+
+function saveOrders(orders) {
+  localStorage.setItem('orders', JSON.stringify(orders));
+}
+
+// Request notification permission
+if (Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
+
+// Show desktop + text notification
+function notify(message) {
+  if (Notification.permission === "granted") {
+    new Notification("Booking Update", { body: message });
+  }
+  notificationDiv.textContent = message;
+  notificationDiv.style.display = 'block';
+  setTimeout(() => { notificationDiv.style.display = 'none'; }, 5000);
+}
+
+// Render all orders
+function renderOrders() {
+  let orders = JSON.parse(localStorage.getItem('orders')) || [];
+  ordersList.innerHTML = '';
+
+  if (orders.length === 0) {
+    ordersList.innerHTML = '<p>No bookings yet.</p>';
+    return;
+  }
+
+  orders.forEach((order, index) => {
+    const orderDiv = document.createElement('div');
+    orderDiv.className = 'order';
+
+    // Status dropdown
+    const statusSelect = document.createElement('select');
+    statusSelect.className = 'status-select';
+    ["Pending", "Confirmation", "On the Way", "Completed"].forEach(status => {
+      const option = document.createElement('option');
+      option.value = status;
+      option.textContent = status;
+      if (order.status === status) option.selected = true;
+      statusSelect.appendChild(option);
+    });
+
+    statusSelect.addEventListener('change', () => {
+      order.status = statusSelect.value;
+      orders[index] = order;
+      saveOrders(orders);
+      notify(`Order #${index + 1} (${order.fullname}) status changed to ${order.status}`);
+      renderOrders();
+    });
+
+    // Remove button
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.textContent = 'Remove';
+    removeBtn.addEventListener('click', () => {
+      orders.splice(index, 1);
+      saveOrders(orders);
+      notify(`Order #${index + 1} (${order.fullname}) removed`);
+      renderOrders();
+    });
+
+    orderDiv.innerHTML = `
+      <p><strong>#${index + 1}</strong></p>
+      <p><strong>Name:</strong> ${order.fullname}</p>
+      <p><strong>Address:</strong> ${order.address}</p>
+      <p><strong>Service & Price:</strong> ${order.service}</p>
+      <p><strong>Payment:</strong> ${order.payment}</p>
+      ${order.receipt ? `<p><strong>Receipt:</strong><br><img src="${order.receipt}" alt="Receipt"></p>` : ''}
+      <p><strong>Status:</strong></p>
+    `;
+
+    orderDiv.appendChild(statusSelect);
+    orderDiv.appendChild(removeBtn);
+    ordersList.appendChild(orderDiv);
+  });
+}
+
+// Initial render
+renderOrders();
+
+// Optional live update across tabs
+window.addEventListener('storage', renderOrders);
+</script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+/* =======================
+   Global Styles
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: url('hands.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =======================
+   Overlay
+======================= */
+.overlay {
+  background-color: rgba(255, 240, 245, 0.85);
+  min-height: 100vh;
+  padding: 0 2rem;
+}
+
+/* =======================
+   Header / Navbar (BookNow Style)
+======================= */
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: #d46f8c;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav a {
+  display: inline-block;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #d46f8c;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav a.active {
+  background-color: #d46f8c;
+  color: #fff;
+}
+
+header nav a:hover {
+  background-color: #b5476c;
+  color: #fff;
+}
+
+/* Responsive Navbar */
+@media (max-width: 600px) {
+  header nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+}
+
+/* =======================
+   Hero Section
+======================= */
+.hero {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 6rem 1rem;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  color: #c94f8b;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #5e3b4d;
+  margin-bottom: 2rem;
+}
+
+.hero button {
+  padding: 0.8rem 2rem;
+  background-color: #d46f8c;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.hero button:hover {
+  background-color: #b5476c;
+}
+
+/* =======================
+   About Us Section
+======================= */
+.about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+}
+
+.about-box {
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(255, 228, 240, 0.9);
+  border-radius: 20px;
+  max-width: 1000px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.about-image {
+  flex: 1 1 300px;
+  min-width: 300px;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-text {
+  flex: 2 1 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.about-content {
+  background: #fff0f5;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.about-content h2 {
+  font-size: 2rem;
+  color: #c94f8b;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.about-content h3 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  color: #d46f8c;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  color: #5e3b4d;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* Responsive About Us */
+@media (max-width: 768px) {
+  .about-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text {
+    padding: 1rem;
+  }
+
+  .about-content p {
+    text-align: center;
+  }
+}
+
+/* =======================
+   Services Section
+======================= */
+.services, .our-services {
+  text-align: center;
+  margin: 4rem 0;
+}
+
+.services h2, .our-services h2 {
+  font-size: 2rem;
+  color: #c94f8b;
+  margin-bottom: 2rem;
+}
+
+.service-card {
+  display: inline-block;
+  background-color: #ffe4f0;
+  color: #c94f8b;
+  padding: 2rem 1.5rem;
+  margin: 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+}
+
+.services-box {
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(255, 228, 240, 0.9);
+  border-radius: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.services-image {
+  flex: 1 1 300px;
+  min-width: 300px;
+}
+
+.services-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.services-list {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.services-list h3 {
+  font-size: 1.2rem;
+  color: #d46f8c;
+  margin-bottom: 2rem;
+  font-weight: 1000;
+}
+
+/* Responsive Services */
+@media (max-width: 768px) {
+  .services-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .services-list {
+    align-items: center;
+    padding: 1rem;
+  }
+}
+
+/* =======================
+   Booking Section
+======================= */
+.booking {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.booking h2 {
+  font-size: 2rem;
+  color: #c94f8b;
+  margin-bottom: 2rem;
+}
+
+.booking form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.booking input,
+.booking select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #d46f8c;
+  outline: none;
+}
+
+.booking button {
+  padding: 0.8rem 2rem;
+  background-color: #d46f8c;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.booking button:hover {
+  background-color: #b5476c;
+}
+
+/* =======================
+   Book Now Button below Services
+======================= */
+.book-now-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.book-now-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: #d46f8c;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.book-now-button:hover {
+  background-color: #b5476c;
+  transform: translateY(-3px);
+}
+
+/* =======================
+   Footer
+======================= */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: #5e3b4d;
+  font-size: 0.9rem;
+}

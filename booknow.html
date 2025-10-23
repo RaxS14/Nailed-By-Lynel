@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Appointment - Nailed by Lynel</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="booknow.css">
+<style>
+  #gcash-info { display: none; margin-top: 10px; }
+  #recent-booking { margin-top: 30px; background: #fff0f5; padding: 15px; border-radius: 8px; }
+  #recent-booking img { max-width: 150px; display: block; margin-top: 5px; }
+  .order-card { margin-bottom: 15px; padding: 10px; border: 1px solid #f0c0de; border-radius: 8px; background: #fffafa; }
+</style>
+</head>
+<body>
+<div class="booknow-overlay">
+
+  <header>
+    <h1>Nailed by Lynel</h1>
+    <nav>
+      <a href="index.html" class="nav-button">Home</a>
+      <a href="booknow.html" class="nav-button active">Book Now</a>
+      <a href="services.html" class="nav-button">Services</a>
+      <a href="technician.html" class="nav-button">Technicians</a>
+      <a href="contact.html" class="nav-button">Contact</a>
+      <a href="reviews.html" class="nav-button">Reviews</a>
+      <a href="logout.html" class="nav-button">Logout</a>
+    </nav>
+  </header>
+
+  <section class="booking-form-section" id="booking-form-section">
+    <h2>Book Your Appointment</h2>
+    <form class="booking-form" id="bookingForm">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" placeholder="Enter your address" required>
+
+      <label for="service">Service & Price</label>
+      <input type="text" id="service" name="service" readonly>
+
+      <label for="payment">Payment Method</label>
+      <select id="payment" name="payment" required>
+        <option value="">Select Payment Method</option>
+        <option value="cod">Cash on Delivery (COD)</option>
+        <option value="gcash">GCash</option>
+      </select>
+
+      <div class="gcash-info" id="gcash-info">
+        <p>Send payment to: 09930034354<br>Darlyn Sumampong</p>
+        <img src="images/qr-code.jpg" alt="GCash QR Code">
+      </div>
+
+      <label for="receipt">Upload Payment Receipt (if GCash)</label>
+      <input type="file" id="receipt" name="receipt" accept="image/*">
+
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </section>
+
+  <section class="recent-booking" id="recent-booking">
+    <h3>Recent Bookings</h3>
+    <div id="recent-orders"><p>No bookings yet.</p></div>
+  </section>
+
+</div>
+
+<script>
+const paymentSelect = document.getElementById('payment');
+const gcashInfo = document.getElementById('gcash-info');
+const bookingForm = document.getElementById('bookingForm');
+const recentOrdersDiv = document.getElementById('recent-orders');
+const serviceInput = document.getElementById('service');
+let previousOrders = [];
+
+// Map of service names to prices
+const servicePrices = {
+  "Nail Care Tips": 300,
+  "Gel Polish Application": 600,
+  "Nail Art Design": 500
+};
+
+// Show/hide GCash info
+paymentSelect.addEventListener('change', () => {
+  gcashInfo.style.display = (paymentSelect.value === 'gcash') ? 'block' : 'none';
+});
+
+// Convert file to Base64 for persistence
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) resolve('');
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+}
+
+// Pre-fill service from URL
+function prefillService() {
+  const params = new URLSearchParams(window.location.search);
+  const serviceName = params.get('service');
+  if(serviceName) {
+    const decodedName = decodeURIComponent(serviceName);
+    const price = servicePrices[decodedName] ? `₱${servicePrices[decodedName]}` : '';
+    serviceInput.value = `${decodedName} - ${price}`;
+  }
+}
+prefillService();
+
+// Show notification
+function notifyUser(message) {
+  // Text notification
+  alert(message); // or you can add a div above recent orders for nicer text notifications
+
+  // Desktop notification
+  if (Notification.permission === "granted") {
+    new Notification("Booking Update", { body: message });
+  }
+}
+
+// Display all orders
+function displayOrders() {
+  let orders = JSON.parse(localStorage.getItem('orders')) || [];
+  if (orders.length === 0) {
+    recentOrdersDiv.innerHTML = '<p>No bookings yet.</p>';
+    previousOrders = [];
+    return;
+  }
+  recentOrdersDiv.innerHTML = '';
+  orders.forEach((order, index) => {
+    const div = document.createElement('div');
+    div.className = 'order-card';
+    div.innerHTML = `
+      <p><strong>Name:</strong> ${order.fullname}</p>
+      <p><strong>Address:</strong> ${order.address}</p>
+      <p><strong>Service & Price:</strong> ${order.service}</p>
+      <p><strong>Payment:</strong> ${order.payment}</p>
+      ${order.receipt ? `<p><strong>Receipt:</strong><br><img src="${order.receipt}" alt="Receipt"></p>` : ''}
+      <p><strong>Status:</strong> ${order.status}</p>
+    `;
+    recentOrdersDiv.appendChild(div);
+  });
+
+  // Compare with previous orders for status changes
+  orders.forEach((order, index) => {
+    const prev = previousOrders[index];
+    if (prev && prev.status !== order.status) {
+      notifyUser(`Your booking for "${order.service}" is now: ${order.status}`);
+    }
+  });
+
+  previousOrders = JSON.parse(JSON.stringify(orders)); // deep copy
+}
+
+// Handle booking submission
+bookingForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const receiptFile = this.receipt.files[0];
+  const receiptBase64 = await fileToBase64(receiptFile);
+  
+  const bookingData = {
+    fullname: this.fullname.value,
+    address: this.address.value,
+    service: this.service.value,
+    payment: this.payment.value,
+    receipt: receiptBase64,
+    status: 'Pending'
+  };
+  
+  let orders = JSON.parse(localStorage.getItem('orders')) || [];
+  orders.push(bookingData);
+  localStorage.setItem('orders', JSON.stringify(orders));
+  displayOrders();
+  
+  alert('Booking Confirmed!');
+  this.reset();
+  gcashInfo.style.display = 'none';
+  prefillService(); // keep service if coming from URL
+});
+
+// Initial display
+displayOrders();
+
+// Poll localStorage every 2 seconds for live status updates
+setInterval(displayOrders, 2000);
+
+// Request notification permission
+if (Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
+</script>
+</body>
+</html>

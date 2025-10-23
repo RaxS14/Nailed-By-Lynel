@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Nail Technicians - Nailed by Lynel</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="index.css">
+  <style>
+    /* Set background to contact.png */
+    body {
+      background: url('images/contact.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+
+    .overlay {
+      background-color: rgba(255, 240, 245, 0.85);
+      min-height: 100vh;
+      padding: 0 2rem;
+    }
+
+    /* Technicians Section like About Us */
+    .technicians-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 2rem;
+    }
+
+    .about-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255, 228, 240, 0.9);
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 300px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .about-image img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 1.5rem 0 1rem 0;
+    }
+
+    .about-text {
+      padding: 1rem 2rem 2rem 2rem;
+    }
+
+    .about-content h2 {
+      font-size: 1.8rem;
+      color: #d46f8c;
+      margin-bottom: 0.3rem;
+    }
+
+    .about-content .label {
+      font-weight: 800;
+      color: #c94f8b;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      .technicians-section {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+
+    <!-- Header / Navbar -->
+    <header>
+      <h1>Nailed by Lynel</h1>
+      <nav>
+        <a href="index.html" class="nav-button">Home</a>
+        <a href="booknow.html" class="nav-button">Book Now</a>
+        <a href="services.html" class="nav-button">Services</a>
+        <a href="technician.html" class="nav-button active">Technicians</a>
+        <a href="contact.html" class="nav-button">Contact</a>
+        <a href="reviews.html" class="nav-button">Reviews</a>
+        <a href="logout.html" class="nav-button">Logout</a>
+      </nav>
+    </header>
+
+    <!-- Technicians Section -->
+    <section class="technicians-section">
+      <!-- Technician 1 -->
+      <div class="about-box">
+        <div class="about-image">
+          <img src="images/Kathryn.jpg" alt="Kathryn">
+        </div>
+        <div class="about-text">
+          <div class="about-content">
+            <h2>Kathryn</h2>
+            <p class="label">Nail Technician</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technician 2 -->
+      <div class="about-box">
+        <div class="about-image">
+          <img src="images/Nadine.jpg" alt="Nadine">
+        </div>
+        <div class="about-text">
+          <div class="about-content">
+            <h2>Nadine</h2>
+            <p class="label">Nail Technician</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technician 3 -->
+      <div class="about-box">
+        <div class="about-image">
+          <img src="images/Anne.jpg" alt="Anne">
+        </div>
+        <div class="about-text">
+          <div class="about-content">
+            <h2>Anne</h2>
+            <p class="label">Nail Technician</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <p>© 2025 Nailed by Lynel | Follow us on Instagram & Facebook</p>
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* =======================
+   Global Styles
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: url('hands.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =======================
+   Overlay
+======================= */
+.booknow-overlay {
+  background-color: rgba(255, 240, 245, 0.85);
+  min-height: 100vh;
+  padding: 0 2rem;
+}
+
+/* =======================
+   Header / Navbar (BookNow Style)
+======================= */
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: #d46f8c;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav a {
+  display: inline-block;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #d46f8c;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav a.active {
+  background-color: #d46f8c;
+  color: #fff;
+}
+
+header nav a:hover {
+  background-color: #b5476c;
+  color: #fff;
+}
+
+/* =======================
+   Booking Form Section
+======================= */
+.booking-form-section {
+  max-width: 500px;
+  margin: 4rem auto;
+  background: #ffe4f0;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.booking-form-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #c94f8b;
+  margin-bottom: 1.5rem;
+}
+
+.booking-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #d46f8c;
+}
+
+.booking-form input,
+.booking-form select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #d46f8c;
+  outline: none;
+}
+
+.booking-form button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #d46f8c;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.booking-form button:hover {
+  background-color: #b5476c;
+  transform: translateY(-3px);
+}
+
+/* =======================
+   GCash Info Box
+======================= */
+.gcash-info {
+  display: none; /* hidden by default, toggled via JS */
+  background: #fff0f5;
+  padding: 1rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.gcash-info img {
+  width: 150px;
+  margin-top: 1rem;
+  border-radius: 10px;
+}
+
+/* =======================
+   Responsive
+======================= */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  header nav a {
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .booking-form-section {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* =======================
+   Footer
+======================= */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: #5e3b4d;
+  font-size: 0.9rem;
+}
