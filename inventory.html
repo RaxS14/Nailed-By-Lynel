@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory — Nailed by Lynel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Poppins', sans-serif; background:#fff8f5; color:#5e3b4d; display:flex; height:100vh; overflow:hidden; }
+
+/* Sidebar */
+.sidebar { width:260px; background:#fff0f5; border-right:1px solid #e0cbbf; padding:2rem 1rem; display:flex; flex-direction:column; align-items:center; position:fixed; height:100%; box-shadow:2px 0 15px rgba(0,0,0,0.05); }
+.sidebar img { width:80px; height:80px; border-radius:50%; object-fit:cover; }
+.sidebar h2 { margin-top:0.5rem; font-size:1.3rem; color:#d46f8c; }
+.sidebar p { font-size:0.9rem; color:#a57a8c; margin-bottom:2rem; }
+.sidebar .nav { list-style:none; width:100%; }
+.sidebar .nav li { margin:0.3rem 0; }
+.sidebar .nav a { display:flex; align-items:center; text-decoration:none; color:#5e3b4d; padding:0.7rem 1rem; border-radius:10px; transition:all 0.3s ease; }
+.sidebar .nav a i { margin-right:10px; font-size:1.2rem; }
+.sidebar .nav a.active, .sidebar .nav a:hover { background:#ffd6e7; color:#d46f8c; font-weight:600; }
+
+/* Main content */
+main { flex:1; margin-left:260px; padding:2rem; overflow-y:auto; }
+header { background:linear-gradient(135deg,#ffdee9,#ffc2d1); color:#5e3b4d; padding:1rem 1.5rem; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; }
+header h1 { font-size:1.5rem; }
+button { cursor:pointer; border:none; border-radius:8px; padding:5px 10px; font-weight:600; }
+table { width:100%; border-collapse:collapse; }
+th, td { border:1px solid #d46f8c; padding:0.8rem; text-align:left; }
+th { background:#ffd6e7; }
+tr:nth-child(even) { background:#fff0f5; }
+.add-btn { background:#d46f8c; color:#fff; margin-bottom:1rem; }
+.add-btn:hover { background:#b14d72; }
+.edit-btn { background:#ffc2d1; color:#5e3b4d; margin-right:5px; }
+.edit-btn:hover { background:#ffb6d4; }
+.delete-btn { background:#d46f8c; color:#fff; }
+.delete-btn:hover { background:#b14d72; }
+
+/* Modal */
+.modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center; z-index:1000; }
+.modal-content { background:#fff; padding:20px; border-radius:10px; width:300px; display:flex; flex-direction:column; gap:10px; }
+.modal-content input { padding:8px; border:1px solid #d46f8c; border-radius:5px; width:100%; }
+.modal-content button { padding:8px; border:none; border-radius:5px; font-weight:600; }
+
+@media(max-width:768px){
+  body { flex-direction:column; }
+  .sidebar { width:100%; flex-direction:row; justify-content:space-around; padding:1rem; height:auto; }
+  main { margin-left:0; padding:1rem; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <img src="images/admin-avatar.png" alt="Admin Avatar">
+  <h2>Admin</h2>
+  <p>Administrator</p>
+  <ul class="nav">
+    <li><a href="admin.html"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+    <li><a href="adminorder.html"><i class="ri-shopping-bag-3-line"></i> Orders</a></li>
+    <li><a href="inventory.html" class="active"><i class="ri-archive-2-line"></i> Inventory</a></li>
+    <li><a href="suppliers.html"><i class="ri-truck-line"></i> Suppliers</a></li>
+    <li><a href="reports.html"><i class="ri-bar-chart-2-line"></i> Reports</a></li>
+    <li><a href="#" id="logoutLink"><i class="ri-logout-circle-line"></i> Logout</a></li>
+  </ul>
+</aside>
+
+<main>
+  <header>
+    <h1>Service Inventory</h1>
+    <button class="add-btn" onclick="showForm()">Add Service</button>
+  </header>
+
+  <table id="inventoryTable">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Service Name</th>
+        <th>Description</th>
+        <th>Duration</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+
+<script>
+let services = JSON.parse(localStorage.getItem('services')) || [
+  { name:'Nail Care Tips', description:'Take care of your nails like a pro', duration:'30 min', price:300 },
+  { name:'Gel Polish Application', description:'Get salon-quality gel polish at home', duration:'45 min', price:600 },
+  { name:'Nail Art Design', description:'Transform your nails with our artistic touch', duration:'1 hr', price:500 },
+];
+
+function saveServices(){
+  localStorage.setItem('services', JSON.stringify(services));
+}
+
+function renderInventory(){
+  const tbody = document.querySelector('#inventoryTable tbody');
+  tbody.innerHTML = '';
+  services.forEach((s,i)=>{
+    const imgHtml = s.image ? `<img src="${s.image}" width="60" height="60" style="object-fit:cover; border-radius:8px;">` : '';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${imgHtml}</td>
+      <td>${s.name}</td>
+      <td>${s.description}</td>
+      <td>${s.duration}</td>
+      <td>₱${s.price}</td>
+      <td>
+        <button class="edit-btn" onclick="showForm(${i})">Edit</button>
+        <button class="delete-btn" onclick="deleteService(${i})">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+  saveServices();
+}
+
+// Show Add/Edit form
+function showForm(index=null){
+  const isEdit = index !== null;
+  const service = isEdit ? services[index] : {};
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <input type="text" id="sName" placeholder="Service Name" value="${service.name || ''}" required>
+      <input type="text" id="sDesc" placeholder="Description" value="${service.description || ''}" required>
+      <input type="text" id="sDur" placeholder="Duration" value="${service.duration || ''}" required>
+      <input type="number" id="sPrice" placeholder="Price" value="${service.price || ''}" required>
+      <input type="file" id="sImage" accept="image/*">
+      <button id="saveBtn">${isEdit ? 'Update' : 'Add'}</button>
+      <button id="cancelBtn">Cancel</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  document.getElementById('cancelBtn').onclick = ()=> modal.remove();
+
+  document.getElementById('saveBtn').onclick = ()=>{
+    const name = document.getElementById('sName').value;
+    const desc = document.getElementById('sDesc').value;
+    const dur = document.getElementById('sDur').value;
+    const price = parseFloat(document.getElementById('sPrice').value);
+    const file = document.getElementById('sImage').files[0];
+
+    if(!name || !desc || !dur || isNaN(price)){ alert('Fill all fields'); return; }
+
+    const saveService = (img=null)=>{
+      const data = { name, description:desc, duration:dur, price, image: img || service.image };
+      if(isEdit) services[index] = data;
+      else services.push(data);
+      renderInventory();
+      modal.remove();
+    };
+
+    if(file){
+      const reader = new FileReader();
+      reader.onload = ()=> saveService(reader.result);
+      reader.readAsDataURL(file);
+    } else saveService();
+  };
+}
+
+// Delete
+function deleteService(i){
+  if(confirm('Delete this service?')){
+    services.splice(i,1);
+    renderInventory();
+  }
+}
+
+// Logout
+document.getElementById('logoutLink').addEventListener('click', e=>{
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href='login.html';
+});
+
+// Initial render
+renderInventory();
+</script>
+
+</body>
+</html>

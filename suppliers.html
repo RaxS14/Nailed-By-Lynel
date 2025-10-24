@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suppliers — Nailed by Lynel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Poppins', sans-serif; background:#fff8f5; color:#5e3b4d; display:flex; height:100vh; overflow:hidden; }
+
+/* Sidebar */
+.sidebar { width:260px; background:#fff0f5; border-right:1px solid #e0cbbf; padding:2rem 1rem; display:flex; flex-direction:column; align-items:center; position:fixed; height:100%; box-shadow:2px 0 15px rgba(0,0,0,0.05); }
+.sidebar img { width:80px; height:80px; border-radius:50%; object-fit:cover; }
+.sidebar h2 { margin-top:0.5rem; font-size:1.3rem; color:#d46f8c; }
+.sidebar p { font-size:0.9rem; color:#a57a8c; margin-bottom:2rem; }
+.sidebar .nav { list-style:none; width:100%; }
+.sidebar .nav li { margin:0.3rem 0; }
+.sidebar .nav a { display:flex; align-items:center; text-decoration:none; color:#5e3b4d; padding:0.7rem 1rem; border-radius:10px; transition:all 0.3s ease; }
+.sidebar .nav a i { margin-right:10px; font-size:1.2rem; }
+.sidebar .nav a.active, .sidebar .nav a:hover { background:#ffd6e7; color:#d46f8c; font-weight:600; }
+
+/* Main content */
+main { flex:1; margin-left:260px; padding:2rem; overflow-y:auto; }
+header { background:linear-gradient(135deg,#ffdee9,#ffc2d1); color:#5e3b4d; padding:1rem 1.5rem; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; }
+header h1 { font-size:1.5rem; }
+
+.supplier-section { background:#fff0f5; padding:2rem; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
+.supplier-section p { font-size:1rem; margin-bottom:1rem; }
+.supplier-section a { color:#d46f8c; text-decoration:none; font-weight:600; }
+.supplier-section a:hover { text-decoration:underline; }
+
+@media(max-width:768px){
+  body { flex-direction:column; }
+  .sidebar { width:100%; flex-direction:row; justify-content:space-around; padding:1rem; height:auto; }
+  main { margin-left:0; padding:1rem; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <img src="images/admin-avatar.png" alt="Admin Avatar">
+  <h2>Admin</h2>
+  <p>Administrator</p>
+  <ul class="nav">
+    <li><a href="admin.html"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+    <li><a href="adminorder.html"><i class="ri-shopping-bag-3-line"></i> Orders</a></li>
+    <li><a href="inventory.html"><i class="ri-archive-2-line"></i> Inventory</a></li>
+    <li><a href="suppliers.html" class="active"><i class="ri-truck-line"></i> Suppliers</a></li>
+    <li><a href="reports.html"><i class="ri-bar-chart-2-line"></i> Reports</a></li>
+    <li><a href="#" id="logoutLink"><i class="ri-logout-circle-line"></i> Logout</a></li>
+  </ul>
+</aside>
+
+<main>
+  <header>
+    <h1>Suppliers</h1>
+  </header>
+
+  <section class="supplier-section">
+    <p>We source our high-quality products from trusted suppliers to ensure the best for our customers.</p>
+    <p>One of our key suppliers is <a href="https://shopee.ph/daily.blossom?uls_trackid=5412n2ie013k" target="_blank" rel="noopener">Daily Blossom on Shopee</a>, providing us with premium items for our inventory.</p>
+  </section>
+</main>
+
+<script>
+// Logout
+document.getElementById('logoutLink').addEventListener('click', e=>{
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href='login.html';
+});
+</script>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ a {
 }
 
 /* =======================
-   Overlay
+   Overlay Container
 ======================= */
 .overlay {
   background-color: rgba(255, 240, 245, 0.85);
@@ -46,19 +46,19 @@ header h1 {
    Notification
 ======================= */
 #notification {
-  background: #fff0f5;
-  border: 1px solid #d46f8c;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  color: #5e3b4d;
   display: none;
   text-align: center;
   font-weight: 600;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #fff0f5;
+  border: 1px solid #d46f8c;
+  border-radius: 10px;
+  color: #5e3b4d;
 }
 
 /* =======================
-   Orders List
+   Orders List Container
 ======================= */
 #orders-list {
   display: flex;
@@ -66,9 +66,11 @@ header h1 {
   gap: 1.5rem;
 }
 
-/* Individual Order Box */
+/* =======================
+   Individual Order Box
+======================= */
 .order {
-  background: #fff0f5;
+  background-color: #fff0f5;
   padding: 1.5rem;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -79,6 +81,7 @@ header h1 {
   color: #5e3b4d;
 }
 
+/* Images inside order */
 .order img {
   max-width: 120px;
   display: block;
@@ -86,16 +89,18 @@ header h1 {
   border-radius: 8px;
 }
 
-/* Status Select & Remove Button */
+/* =======================
+   Status Dropdown
+======================= */
 .status-select {
   margin-top: 0.5rem;
   padding: 0.5rem;
   border-radius: 10px;
   border: 1px solid #d46f8c;
   font-weight: 600;
-  cursor: pointer;
-  background: #fff;
+  background-color: #fff;
   color: #d46f8c;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
@@ -104,13 +109,16 @@ header h1 {
   color: #fff;
 }
 
+/* =======================
+   Remove Button
+======================= */
 .remove-btn {
   margin-top: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 10px;
   border: none;
   background-color: #ff6b6b;
-  color: white;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -121,12 +129,13 @@ header h1 {
 }
 
 /* =======================
-   Responsive
+   Responsive Styles
 ======================= */
 @media (max-width: 600px) {
   #orders-list {
     flex-direction: column;
   }
+  
   .order {
     padding: 1rem;
   }

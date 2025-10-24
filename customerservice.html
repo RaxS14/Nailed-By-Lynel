@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Service - Nailed by Lynel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+/* =======================
+   Global Styles
+======================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: url('hands.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* =======================
+   Overlay
+======================= */
+.overlay {
+  background-color: rgba(255, 240, 245, 0.85);
+  min-height: 100vh;
+  padding: 0 2rem;
+}
+
+/* =======================
+   Header / Navbar
+======================= */
+header {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: #d46f8c;
+}
+
+header nav {
+  margin-top: 1rem;
+}
+
+header nav a {
+  display: inline-block;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #d46f8c;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav a.active {
+  background-color: #d46f8c;
+  color: #fff;
+}
+
+header nav a:hover {
+  background-color: #b5476c;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  header nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+}
+
+/* =======================
+   Customer Service Form
+======================= */
+h1,h2 { color:#d46f8c; text-align:center; margin-top: 1rem; }
+form {
+  background:#fff0f5;
+  padding:2rem;
+  border-radius:10px;
+  max-width:500px;
+  margin:2rem auto;
+  box-shadow:0 5px 15px rgba(212,111,140,0.2);
+}
+
+form input, form textarea {
+  width:100%;
+  padding:0.8rem;
+  margin-bottom:1rem;
+  border-radius:5px;
+  border:1px solid #d46f8c;
+}
+
+form button {
+  padding:0.8rem 1.5rem;
+  background:#d46f8c;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  border-radius:5px;
+}
+
+form button:hover { background:#b14d72; }
+
+#confirmation { margin-top:1rem; color:#5e3b4d; font-weight:600; display:none; text-align:center; }
+
+/* =======================
+   Ticket Display
+======================= */
+#statusDisplay {
+  margin-top:2rem;
+  max-width:700px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.ticket-status {
+  background:#fff8f8;
+  padding:1rem;
+  border-radius:8px;
+  margin-bottom:1rem;
+  box-shadow:0 5px 15px rgba(212,111,140,0.1);
+}
+
+.ticket-status strong { color:#d46f8c; }
+
+.ticket-status img {
+  max-width:200px;
+  border-radius:5px;
+  display:block;
+  margin-top:0.5rem;
+}
+
+/* =======================
+   Footer
+======================= */
+footer {
+  text-align:center;
+  padding:2rem 0;
+  color:#5e3b4d;
+  font-size:0.9rem;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay">
+
+<!-- Header / Navbar -->
+<header>
+  <h1>Nailed by Lynel</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="booknow.html">Book Now</a>
+    <a href="services.html">Services</a>
+    <a href="technician.html">Technicians</a>
+    <a href="contact.html">Contact</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="customerservice.html" class="active">Customer Service</a>
+    <a href="logout.html">Logout</a>
+  </nav>
+</header>
+
+<h1>Customer Service</h1>
+<p style="text-align:center;">Submit a ticket if you have a problem. Attach a photo if needed.</p>
+
+<form id="ticketForm">
+  <input type="text" name="fullname" placeholder="Full Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="tel" name="contact" placeholder="Phone Number" required>
+  <textarea name="issue" placeholder="Describe your problem" required></textarea>
+  <input type="file" name="attachment" accept="image/*">
+  <button type="submit">Submit Ticket</button>
+  <div id="confirmation">Ticket submitted successfully!</div>
+</form>
+
+<div id="statusDisplay"></div>
+
+<footer>
+  &copy; 2025 Nailed by Lynel. All Rights Reserved.
+</footer>
+</div>
+
+<script>
+// Helper functions
+function getTickets() { return JSON.parse(localStorage.getItem('tickets')) || []; }
+function saveTickets(tickets) { localStorage.setItem('tickets', JSON.stringify(tickets)); }
+function notify(message) {
+  if(Notification.permission === "granted") new Notification("Ticket Update", { body: message });
+}
+
+// Render all ticket details
+function renderStatuses() {
+  const tickets = getTickets();
+  const container = document.getElementById('statusDisplay');
+  container.innerHTML = '';
+
+  if(tickets.length === 0) {
+    container.innerHTML = '<p style="text-align:center;">No tickets submitted yet.</p>';
+    return;
+  }
+
+  tickets.forEach((ticket, index) => {
+    const div = document.createElement('div');
+    div.className = 'ticket-status';
+    div.innerHTML = `
+      <p><strong>Ticket #${index+1}</strong></p>
+      <p><strong>Full Name:</strong> ${ticket.fullname}</p>
+      <p><strong>Email:</strong> ${ticket.email}</p>
+      <p><strong>Phone:</strong> ${ticket.contact}</p>
+      <p><strong>Issue:</strong> ${ticket.message}</p>
+      ${ticket.attachment ? `<p><strong>Attachment:</strong><br><img src="${ticket.attachment}"></p>` : ''}
+      <p><strong>Status:</strong> ${ticket.status}</p>
+      <p><strong>Submitted:</strong> ${ticket.timestamp}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// Form submission
+document.getElementById('ticketForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const form = e.target;
+  const ticket = {
+    fullname: form.fullname.value,
+    email: form.email.value,
+    contact: form.contact.value,
+    message: form.issue.value,
+    attachment: null,
+    status: 'Pending',
+    timestamp: new Date().toLocaleString()
+  };
+
+  const attachmentInput = form.attachment;
+  const reader = new FileReader();
+  reader.onload = function() {
+    ticket.attachment = reader.result || null;
+    const tickets = getTickets();
+    tickets.push(ticket);
+    saveTickets(tickets);
+
+    document.getElementById('confirmation').style.display = 'block';
+    setTimeout(()=>{ document.getElementById('confirmation').style.display='none'; }, 3000);
+
+    form.reset();
+    renderStatuses();
+  };
+
+  if(attachmentInput.files[0]) reader.readAsDataURL(attachmentInput.files[0]);
+  else reader.onload();
+});
+
+// Live update for ticket changes
+window.addEventListener('storage', (e) => {
+  if (e.key === 'tickets') {
+    const oldTickets = JSON.parse(e.oldValue || '[]');
+    const newTickets = JSON.parse(e.newValue || '[]');
+
+    newTickets.forEach((t, i) => {
+      // If status changed, notify
+      if (oldTickets[i] && oldTickets[i].status !== t.status) {
+        notify(`Ticket #${i + 1} status changed to ${t.status}`);
+      }
+      // If new ticket added, optionally notify
+      if (!oldTickets[i]) {
+        notify(`New ticket submitted by ${t.fullname}`);
+      }
+    });
+
+    renderStatuses(); // Update ticket list
+  }
+});
+
+// Request notification permission
+if (Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
+
+// Initial render
+renderStatuses();
+</script>
+
+</body>
+</html>

@@ -3,111 +3,273 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Bookings Dashboard</title>
+<title>Admin Dashboard — Customer Service</title>
+
+<!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="admin.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Poppins', sans-serif;
+  background:#fff8f5 url('images/background.png') no-repeat center center;
+  background-size:cover;
+  color:#5e3b4d;
+  display:flex;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width:260px;
+  background:#fff0f5;
+  border-right:1px solid #e0cbbf;
+  padding:2rem 1rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  box-shadow:2px 0 15px rgba(0,0,0,0.05);
+  position:fixed;
+  height:100%;
+}
+.sidebar img { width:80px; height:80px; border-radius:50%; object-fit:cover; }
+.sidebar h2 { margin-top:0.5rem; font-size:1.3rem; color:#d46f8c; }
+.sidebar p { font-size:0.9rem; color:#a57a8c; margin-bottom:2rem; }
+.sidebar .nav { list-style:none; width:100%; }
+.sidebar .nav li { margin:0.3rem 0; }
+.sidebar .nav a { display:flex; align-items:center; text-decoration:none; color:#5e3b4d; padding:0.7rem 1rem; border-radius:10px; transition:all 0.3s ease; }
+.sidebar .nav a i { margin-right:10px; font-size:1.2rem; }
+.sidebar .nav a.active, .sidebar .nav a:hover { background:#ffd6e7; color:#d46f8c; font-weight:600; }
+
+/* Main */
+main {
+  flex:1;
+  margin-left:260px;
+  padding:2rem;
+  overflow-y:auto;
+}
+header {
+  background:linear-gradient(135deg,#ffdee9,#ffc2d1);
+  color:#5e3b4d;
+  padding:1rem 1.5rem;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  margin-bottom:2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header h1 { font-size:1.5rem; }
+.refresh-indicator {
+  font-size:0.9rem;
+  background: rgba(255,255,255,0.3);
+  padding:0.4rem 0.8rem;
+  border-radius:10px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
+
+/* Tickets */
+.ticket {
+  background:#fff0f5;
+  padding:1rem;
+  border-radius:15px;
+  margin-bottom:1rem;
+  box-shadow:0 10px 25px rgba(212,111,140,0.15);
+}
+.ticket img {
+  max-width:200px;
+  border-radius:8px;
+  display:block;
+  margin-top:0.5rem;
+  cursor:pointer;
+}
+.status-select, .remove-btn {
+  margin-top:0.5rem;
+  padding:6px 12px;
+  border-radius:8px;
+  border:1px solid #d46f8c;
+  cursor:pointer;
+  font-weight:600;
+  transition:all 0.3s ease;
+}
+.status-select { background:#fff; color:#d46f8c; }
+.status-select:hover { background:#d46f8c; color:#fff; }
+.remove-btn { background:#d46f8c; border:none; color:#fff; }
+.remove-btn:hover { background:#b14d72; }
+
+/* Notification */
+#notification {
+  background:#ffd6e7;
+  padding:0.5rem 1rem;
+  border-radius:8px;
+  margin-bottom:1rem;
+  display:none;
+  color:#5e3b4d;
+  font-weight:600;
+}
+
+/* Modal */
+#imageModal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+#imageModal img {
+  max-width:90%; max-height:90%;
+  border-radius:10px;
+}
+#imageModal span {
+  position:absolute; top:20px; right:30px;
+  font-size:2rem; color:#fff; cursor:pointer;
+}
+
+@media(max-width:768px){
+  body { flex-direction:column; }
+  .sidebar { width:100%; flex-direction:row; justify-content:space-around; padding:1rem; }
+  main { margin-left:0; padding:1rem; }
+}
+</style>
 </head>
 <body>
-<div class="overlay">
+
+<aside class="sidebar">
+  <img src="images/admin-avatar.png" alt="Admin Avatar">
+  <h2>Admin</h2>
+  <p>Administrator</p>
+  <ul class="nav">
+    <li><a href="admin.html" class="active"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+    <li><a href="adminorder.html"><i class="ri-shopping-bag-3-line"></i> Orders</a></li>
+    <li><a href="inventory.html"><i class="ri-archive-2-line"></i> Inventory</a></li>
+    <li><a href="suppliers.html"><i class="ri-truck-line"></i> Suppliers</a></li>
+    <li><a href="reports.html"><i class="ri-bar-chart-2-line"></i> Reports</a></li>
+    <li><a href="#" id="logoutLink"><i class="ri-logout-circle-line"></i> Logout</a></li>
+  </ul>
+</aside>
+
+<main>
   <header>
-    <h1>All Bookings</h1>
+    <h1>Customer Service Tickets</h1>
+    <span class="refresh-indicator">Live updates 🔄</span>
   </header>
 
   <div id="notification"></div>
 
-  <div id="orders-list">
-    <p>No bookings yet.</p>
+  <!-- Modal for image -->
+  <div id="imageModal">
+    <span id="closeModal">&times;</span>
+    <img id="modalImg" src="">
   </div>
-</div>
+
+  <div id="ticketsContainer"><p>No tickets submitted yet.</p></div>
+</main>
 
 <script>
-const ordersList = document.getElementById('orders-list');
+// Logout
+document.getElementById('logoutLink').addEventListener('click', e=>{
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href='login.html';
+});
+
+// Notification
+const ticketsContainer = document.getElementById('ticketsContainer');
 const notificationDiv = document.getElementById('notification');
 
-function saveOrders(orders) {
-  localStorage.setItem('orders', JSON.stringify(orders));
-}
-
-// Request notification permission
-if (Notification.permission !== "granted") {
-  Notification.requestPermission();
-}
-
-// Show desktop + text notification
-function notify(message) {
-  if (Notification.permission === "granted") {
-    new Notification("Booking Update", { body: message });
-  }
+function notify(message){
   notificationDiv.textContent = message;
-  notificationDiv.style.display = 'block';
-  setTimeout(() => { notificationDiv.style.display = 'none'; }, 5000);
+  notificationDiv.style.display='block';
+  setTimeout(()=>notificationDiv.style.display='none',5000);
 }
 
-// Render all orders
-function renderOrders() {
-  let orders = JSON.parse(localStorage.getItem('orders')) || [];
-  ordersList.innerHTML = '';
+// Render Tickets
+function renderTickets(){
+  const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+  ticketsContainer.innerHTML = '';
 
-  if (orders.length === 0) {
-    ordersList.innerHTML = '<p>No bookings yet.</p>';
+  if(tickets.length===0){
+    ticketsContainer.innerHTML = '<p>No tickets submitted yet.</p>';
     return;
   }
 
-  orders.forEach((order, index) => {
-    const orderDiv = document.createElement('div');
-    orderDiv.className = 'order';
+  tickets.forEach((ticket,index)=>{
+    const div = document.createElement('div');
+    div.className = 'ticket';
 
-    // Status dropdown
+    div.innerHTML = `
+      <p><strong>#${index+1}</strong></p>
+      <p><strong>Name:</strong> ${ticket.fullname || ticket.name || 'N/A'}</p>
+      <p><strong>Contact:</strong> ${ticket.contact || 'N/A'}</p>
+      <p><strong>Issue:</strong> ${ticket.message || ticket.issue || 'N/A'}</p>
+      <p><strong>Status:</strong></p>
+    `;
+
+    // Attachment
+    if(ticket.attachment){
+      const attachmentP = document.createElement('p');
+      attachmentP.innerHTML = `<strong>Attachment:</strong><br>`;
+      const img = document.createElement('img');
+      img.src = ticket.attachment;
+      img.alt = "Attachment";
+      img.addEventListener('click', ()=>{
+        document.getElementById('imageModal').style.display = 'flex';
+        document.getElementById('modalImg').src = ticket.attachment;
+      });
+      attachmentP.appendChild(img);
+      div.insertBefore(attachmentP, div.querySelector('p:last-of-type'));
+    }
+
+    // Status select
     const statusSelect = document.createElement('select');
     statusSelect.className = 'status-select';
-    ["Pending", "Confirmation", "On the Way", "Completed"].forEach(status => {
+    ['Pending','In Progress','Resolved'].forEach(s=>{
       const option = document.createElement('option');
-      option.value = status;
-      option.textContent = status;
-      if (order.status === status) option.selected = true;
+      option.value = s;
+      option.textContent = s;
+      if(ticket.status === s) option.selected = true;
       statusSelect.appendChild(option);
     });
 
-    statusSelect.addEventListener('change', () => {
-      order.status = statusSelect.value;
-      orders[index] = order;
-      saveOrders(orders);
-      notify(`Order #${index + 1} (${order.fullname}) status changed to ${order.status}`);
-      renderOrders();
+    statusSelect.addEventListener('change', ()=>{
+      ticket.status = statusSelect.value;
+      tickets[index] = ticket;
+      localStorage.setItem('tickets', JSON.stringify(tickets));
+      notify(`Ticket #${index+1} status updated to ${ticket.status}`);
+      renderTickets();
     });
 
     // Remove button
     const removeBtn = document.createElement('button');
     removeBtn.className = 'remove-btn';
     removeBtn.textContent = 'Remove';
-    removeBtn.addEventListener('click', () => {
-      orders.splice(index, 1);
-      saveOrders(orders);
-      notify(`Order #${index + 1} (${order.fullname}) removed`);
-      renderOrders();
+    removeBtn.addEventListener('click', ()=>{
+      tickets.splice(index,1);
+      localStorage.setItem('tickets', JSON.stringify(tickets));
+      notify(`Ticket #${index+1} removed`);
+      renderTickets();
     });
 
-    orderDiv.innerHTML = `
-      <p><strong>#${index + 1}</strong></p>
-      <p><strong>Name:</strong> ${order.fullname}</p>
-      <p><strong>Address:</strong> ${order.address}</p>
-      <p><strong>Service & Price:</strong> ${order.service}</p>
-      <p><strong>Payment:</strong> ${order.payment}</p>
-      ${order.receipt ? `<p><strong>Receipt:</strong><br><img src="${order.receipt}" alt="Receipt"></p>` : ''}
-      <p><strong>Status:</strong></p>
-    `;
-
-    orderDiv.appendChild(statusSelect);
-    orderDiv.appendChild(removeBtn);
-    ordersList.appendChild(orderDiv);
+    div.append(statusSelect, removeBtn);
+    ticketsContainer.appendChild(div);
   });
 }
 
-// Initial render
-renderOrders();
+// Close modal
+document.getElementById('closeModal').addEventListener('click', ()=>{
+  document.getElementById('imageModal').style.display = 'none';
+});
 
-// Optional live update across tabs
-window.addEventListener('storage', renderOrders);
+// Initial render & live update
+renderTickets();
+window.addEventListener('storage', renderTickets);
 </script>
+
 </body>
 </html>

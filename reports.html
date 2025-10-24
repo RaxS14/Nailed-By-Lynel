@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports — Nailed by Lynel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Poppins', sans-serif; background:#fff8f5; color:#5e3b4d; display:flex; min-height:100vh; }
+
+/* Sidebar */
+.sidebar { width:260px; background:#fff0f5; border-right:1px solid #e0cbbf; padding:2rem 1rem; display:flex; flex-direction:column; align-items:center; position:fixed; height:100%; box-shadow:2px 0 15px rgba(0,0,0,0.05); }
+.sidebar img { width:80px; height:80px; border-radius:50%; object-fit:cover; }
+.sidebar h2 { margin-top:0.5rem; font-size:1.3rem; color:#d46f8c; }
+.sidebar p { font-size:0.9rem; color:#a57a8c; margin-bottom:2rem; }
+.sidebar .nav { list-style:none; width:100%; }
+.sidebar .nav li { margin:0.3rem 0; }
+.sidebar .nav a { display:flex; align-items:center; text-decoration:none; color:#5e3b4d; padding:0.7rem 1rem; border-radius:10px; transition:all 0.3s ease; }
+.sidebar .nav a i { margin-right:10px; font-size:1.2rem; }
+.sidebar .nav a.active, .sidebar .nav a:hover { background:#ffd6e7; color:#d46f8c; font-weight:600; }
+
+/* Main content */
+main { flex:1; margin-left:260px; padding:2rem; overflow-y:auto; }
+header { background:linear-gradient(135deg,#ffdee9,#ffc2d1); color:#5e3b4d; padding:1rem 1.5rem; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; }
+header h1 { font-size:1.5rem; }
+
+.card { background:#fff0f5; padding:1rem; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); margin-bottom:1.5rem; }
+.card h3 { margin-bottom:0.5rem; }
+
+table { width:100%; border-collapse:collapse; margin-top:0.5rem; }
+th, td { border:1px solid #d46f8c; padding:0.8rem; text-align:left; }
+th { background:#ffd6e7; }
+tr:nth-child(even) { background:#fff8f5; }
+
+@media(max-width:768px){
+  body { flex-direction:column; }
+  .sidebar { width:100%; flex-direction:row; justify-content:space-around; padding:1rem; height:auto; }
+  main { margin-left:0; padding:1rem; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <img src="images/admin-avatar.png" alt="Admin Avatar">
+  <h2>Admin</h2>
+  <p>Administrator</p>
+  <ul class="nav">
+    <li><a href="admin.html"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+    <li><a href="adminorder.html"><i class="ri-shopping-bag-3-line"></i> Orders</a></li>
+    <li><a href="inventory.html"><i class="ri-archive-2-line"></i> Inventory</a></li>
+    <li><a href="suppliers.html"><i class="ri-truck-line"></i> Suppliers</a></li>
+    <li><a href="reports.html" class="active"><i class="ri-bar-chart-2-line"></i> Reports</a></li>
+    <li><a href="#" id="logoutLink"><i class="ri-logout-circle-line"></i> Logout</a></li>
+  </ul>
+</aside>
+
+<main>
+  <header>
+    <h1>Reports Dashboard</h1>
+  </header>
+
+  <div class="card">
+    <h3>Total Services</h3>
+    <p id="totalServices">0</p>
+  </div>
+
+  <div class="card">
+    <h3>Total Orders</h3>
+    <p id="totalOrders">0</p>
+  </div>
+
+  <div class="card">
+    <h3>Total Revenue</h3>
+    <p id="totalRevenue">₱0</p>
+  </div>
+
+  <div class="card">
+    <h3>Orders Breakdown</h3>
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>Customer Name</th>
+          <th>Contact Number</th>
+          <th>Service Name</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+// Logout
+document.getElementById('logoutLink').addEventListener('click', e => {
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href = 'login.html';
+});
+
+// Load data
+const services = JSON.parse(localStorage.getItem('services')) || [];
+const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+// Total services
+document.getElementById('totalServices').textContent = services.length;
+
+// Total orders
+document.getElementById('totalOrders').textContent = orders.length;
+
+// Calculate total revenue and ensure numeric price
+let totalRevenue = 0;
+
+// Orders table
+const ordersTableBody = document.querySelector('#ordersTable tbody');
+ordersTableBody.innerHTML = '';
+
+orders.forEach(o => {
+  // Use numeric price if available, otherwise extract from service string
+  let price = o.price;
+  if (!price && o.service) {
+    const match = o.service.match(/₱(\d+)/);
+    price = match ? parseInt(match[1]) : 0;
+  }
+  totalRevenue += price;
+
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${o.fullname || 'N/A'}</td>
+    <td>${o.address || 'N/A'}</td>
+    <td>${o.service || 'N/A'}</td>
+    <td>₱${price}</td>
+    <td>${o.status || 'Pending'}</td>
+  `;
+  ordersTableBody.appendChild(tr);
+});
+
+// Update total revenue
+document.getElementById('totalRevenue').textContent = `₱${totalRevenue}`;
+</script>
+
+</body>
+</html>
